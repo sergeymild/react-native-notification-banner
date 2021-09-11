@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:clipToPadding="false"
+  android:clipChildren="false"
+	android:orientation="horizontal"
+	tools:style="@style/AlertStyle">
+
+	<LinearLayout
+    android:elevation="5dp"
+    android:id="@+id/banner_container"
+		android:layout_width="0dp"
+		android:layout_weight="1"
+    android:padding="16dp"
+    android:background="@android:color/background_dark"
+		android:layout_height="wrap_content"
+		android:layout_gravity="center_vertical"
+		android:orientation="vertical">
+
+		<androidx.appcompat.widget.AppCompatTextView
+			android:id="@+id/tvTitle"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+      android:textColor="@android:color/white"
+			android:textAppearance="@style/AlertTextAppearance.Title"
+			android:visibility="gone"
+			tools:text="Title"
+			tools:visibility="visible" />
+
+		<androidx.appcompat.widget.AppCompatTextView
+			android:id="@+id/tvText"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:paddingTop="@dimen/alerter_padding_small"
+      android:textColor="@android:color/white"
+			android:textAppearance="@style/AlertTextAppearance.Text"
+			android:visibility="gone"
+			tools:text="Text"
+			tools:visibility="visible" />
+
+	</LinearLayout>
+
+	<FrameLayout
+		android:id="@+id/flRightIconContainer"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_gravity="center_vertical">
+
+		<androidx.appcompat.widget.AppCompatImageView
+			android:id="@+id/ivRightIcon"
+			android:layout_width="@dimen/alerter_alert_icn_size"
+			android:layout_height="@dimen/alerter_alert_icn_size"
+			android:maxWidth="@dimen/alerter_alert_icn_size"
+			android:maxHeight="@dimen/alerter_alert_icn_size"
+			android:visibility="gone"
+			app:srcCompat="@drawable/alerter_ic_notifications"
+			app:tint="@color/alert_default_icon_color"
+			tools:visibility="visible" />
+	</FrameLayout>
+</LinearLayout>

@@ -1,7 +1,16 @@
 import { NativeModules } from 'react-native';
 
+interface Params {
+  title: string;
+  subtitle?: string;
+  style?: 'success' | 'error' | 'info';
+  duration?: number;
+  borderRadius?: number;
+  elevation?: number;
+}
+
 type NotificationBannerType = {
-  multiply(a: number, b: number): Promise<number>;
+  show(params: Params): void;
 };
 
 const { NotificationBanner } = NativeModules;

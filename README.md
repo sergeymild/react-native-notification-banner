@@ -5,7 +5,7 @@ No
 ## Installation
 
 ```sh
-npm install react-native-notification-banner
+"react-native-notification-banner": "sergeymild/react-native-notification-banner"
 ```
 
 ## Usage
@@ -14,14 +14,13 @@ npm install react-native-notification-banner
 import NotificationBanner from "react-native-notification-banner";
 
 // ...
-
-const result = await NotificationBanner.multiply(3, 7);
+interface Params {
+  title: string;
+  subtitle?: string;
+  style?: 'success' | 'error' | 'info';
+  duration?: number;
+  borderRadius?: number;
+  elevation?: number;
+}
+NotificationBanner.show(params);
 ```
-
-## Contributing
-
-See the [contributing guide](CONTRIBUTING.md) to learn how to contribute to the repository and the development workflow.
-
-## License
-
-MIT

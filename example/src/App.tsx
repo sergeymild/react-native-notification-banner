@@ -1,18 +1,27 @@
 import * as React from 'react';
 
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import NotificationBanner from 'react-native-notification-banner';
 
 export default function App() {
   const [result, setResult] = React.useState<number | undefined>();
 
-  React.useEffect(() => {
-    NotificationBanner.multiply(3, 7).then(setResult);
-  }, []);
-
   return (
     <View style={styles.container}>
-      <Text>Result: {result}</Text>
+      <TouchableOpacity
+        style={{ marginTop: 100 }}
+        onPress={() => {
+          NotificationBanner.show({
+            title: 'Some title',
+            subtitle: 'Some su',
+            style: 'success',
+            duration: 3000,
+            borderRadius: 14,
+          });
+        }}
+      >
+        <Text>Press</Text>
+      </TouchableOpacity>
     </View>
   );
 }
