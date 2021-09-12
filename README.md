@@ -15,7 +15,7 @@ import NotificationBanner from "react-native-notification-banner";
 
 // ...
 interface Params {
-  title: string;
+  title?: string;
   subtitle?: string;
   style?: 'success' | 'error' | 'info';
   duration?: number;
