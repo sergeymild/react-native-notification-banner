@@ -1,7 +1,7 @@
 import { NativeModules } from 'react-native';
 
 interface Params {
-  title: string;
+  title?: string;
   subtitle?: string;
   style?: 'success' | 'error' | 'info';
   duration?: number;
