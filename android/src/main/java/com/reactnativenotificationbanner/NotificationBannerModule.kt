@@ -46,7 +46,7 @@ class NotificationBannerModule(reactContext: ReactApplicationContext) : ReactCon
 
   @ReactMethod
   fun show(params: ReadableMap) {
-    Alerter.hide(OnHideAlertListener {
+    val listener = OnHideAlertListener {
       currentActivity?.runOnUiThread {
         val builder = Alerter.create(currentActivity!!, layoutId = R.layout.alert_default_layout).hideIcon()
         var cornerRadius = PixelUtil.toPixelFromDIP(10f)
@@ -110,6 +110,8 @@ class NotificationBannerModule(reactContext: ReactApplicationContext) : ReactCon
         builder.enableClickAnimation(false)
         builder.show()
       }
-    })
+    }
+    if (Alerter.isShowing) Alerter.hide(listener)
+    else listener.onHide()
   }
 }
