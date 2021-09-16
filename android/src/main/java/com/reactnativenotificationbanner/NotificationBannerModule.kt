@@ -49,7 +49,10 @@ class NotificationBannerModule(reactContext: ReactApplicationContext) : ReactCon
     Alerter.hide(OnHideAlertListener {
       currentActivity?.runOnUiThread {
         val builder = Alerter.create(currentActivity!!, layoutId = R.layout.alert_default_layout).hideIcon()
-        if (params.hasKey("title")) {
+        var cornerRadius = PixelUtil.toPixelFromDIP(10f)
+      if (params.hasKey("borderRadius")) {
+        cornerRadius = PixelUtil.toPixelFromDIP(params.getInt("borderRadius").toFloat())
+      }if (params.hasKey("title")) {
           builder.setTitle(params.getString("title")!!)
         }
 
@@ -83,11 +86,10 @@ class NotificationBannerModule(reactContext: ReactApplicationContext) : ReactCon
             }
           }
 
-          if (params.hasKey("borderRadius")) {
+
             val mViewOutlineProvider: ViewOutlineProvider = object : ViewOutlineProvider() {
               override fun getOutline(view: View, outline: Outline) {
-                val cornerRadius = PixelUtil.toPixelFromDIP(params.getInt("borderRadius").toFloat())
-                val left = 0
+                val  left = 0
                 val top = 0;
                 val right = view.width
                 val bottom = view.height
@@ -96,7 +98,7 @@ class NotificationBannerModule(reactContext: ReactApplicationContext) : ReactCon
             }
             container.outlineProvider = mViewOutlineProvider
             container.clipToOutline = true
-          }
+
 
           if (params.hasKey("elevation")) {
             container.elevation = params.getInt("elevation").toFloat()
