@@ -50,9 +50,10 @@ class NotificationBannerModule(reactContext: ReactApplicationContext) : ReactCon
       currentActivity?.runOnUiThread {
         val builder = Alerter.create(currentActivity!!, layoutId = R.layout.alert_default_layout).hideIcon()
         var cornerRadius = PixelUtil.toPixelFromDIP(10f)
-      if (params.hasKey("borderRadius")) {
-        cornerRadius = PixelUtil.toPixelFromDIP(params.getInt("borderRadius").toFloat())
-      }if (params.hasKey("title")) {
+        if (params.hasKey("borderRadius")) {
+          cornerRadius = PixelUtil.toPixelFromDIP(params.getInt("borderRadius").toFloat())
+        }
+        if (params.hasKey("title")) {
           builder.setTitle(params.getString("title")!!)
         }
 
@@ -87,17 +88,17 @@ class NotificationBannerModule(reactContext: ReactApplicationContext) : ReactCon
           }
 
 
-            val mViewOutlineProvider: ViewOutlineProvider = object : ViewOutlineProvider() {
-              override fun getOutline(view: View, outline: Outline) {
-                val  left = 0
-                val top = 0;
-                val right = view.width
-                val bottom = view.height
-                outline.setRoundRect(left, top, right, bottom, cornerRadius)
-              }
+          val mViewOutlineProvider: ViewOutlineProvider = object : ViewOutlineProvider() {
+            override fun getOutline(view: View, outline: Outline) {
+              val left = 0
+              val top = 0;
+              val right = view.width
+              val bottom = view.height
+              outline.setRoundRect(left, top, right, bottom, cornerRadius)
             }
-            container.outlineProvider = mViewOutlineProvider
-            container.clipToOutline = true
+          }
+          container.outlineProvider = mViewOutlineProvider
+          container.clipToOutline = true
 
 
           if (params.hasKey("elevation")) {
