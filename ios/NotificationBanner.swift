@@ -2,6 +2,7 @@ import NotificationBannerSwift
 
 @objc(NotificationBanner)
 class NotificationBanner: NSObject {
+    var presentedBanner: BaseNotificationBanner?
 
     @objc(multiply:withB:withResolver:withRejecter:)
     func multiply(a: Float, b: Float, resolve:RCTPromiseResolveBlock,reject:RCTPromiseRejectBlock) -> Void {
@@ -21,7 +22,8 @@ class NotificationBanner: NSObject {
         if type == "info" {
             style = .info
         }
-        DispatchQueue.main.async {
+        DispatchQueue.main.async { [weak self] in
+            self?.presentedBanner?.dismiss()
             let banner = FloatingNotificationBanner(
                 title: params["title"] as? String,
                 subtitle: params["subtitle"] as? String,
@@ -34,6 +36,7 @@ class NotificationBanner: NSObject {
                 shadowBlurRadius: 10,
                 shadowOffset: .init(horizontal: 3, vertical: 3)
             )
+            self?.presentedBanner = banner
         }
     }
 }

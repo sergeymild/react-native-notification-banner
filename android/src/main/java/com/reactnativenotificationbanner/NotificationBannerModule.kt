@@ -11,6 +11,8 @@ import android.graphics.Outline
 
 import android.view.ViewOutlineProvider
 import com.facebook.react.uimanager.PixelUtil
+import com.tapadoo.alerter.Alert
+import com.tapadoo.alerter.OnHideAlertListener
 
 
 fun argb(alpha: Float, red: Float, green: Float, blue: Float): Int {
@@ -44,66 +46,67 @@ class NotificationBannerModule(reactContext: ReactApplicationContext) : ReactCon
 
   @ReactMethod
   fun show(params: ReadableMap) {
-    currentActivity?.runOnUiThread {
-      val builder = Alerter.create(currentActivity!!, layoutId = R.layout.alert_default_layout).hideIcon()
-      if (params.hasKey("title")) {
-        builder.setTitle(params.getString("title")!!)
-      }
+    Alerter.hide(OnHideAlertListener {
+      currentActivity?.runOnUiThread {
+        val builder = Alerter.create(currentActivity!!, layoutId = R.layout.alert_default_layout).hideIcon()
+        if (params.hasKey("title")) {
+          builder.setTitle(params.getString("title")!!)
+        }
 
-      if (params.hasKey("subtitle")) {
-        builder.setText(params.getString("subtitle")!!)
-      }
+        if (params.hasKey("subtitle")) {
+          builder.setText(params.getString("subtitle")!!)
+        }
 
-      if (params.hasKey("style")) {
-//        builder.setBackgroundColorInt(colors[params.getString("style")!!]!!)
-        builder.setBackgroundColorInt(Color.TRANSPARENT)
-      }
+        if (params.hasKey("style")) {
+          builder.setBackgroundColorInt(Color.TRANSPARENT)
+        }
 
-      if (params.hasKey("duration")) {
-        builder.setDuration(params.getInt("duration").toLong())
-      }
+        if (params.hasKey("duration")) {
+          builder.setDuration(params.getInt("duration").toLong())
+        }
 
-      builder.setEnterAnimation(R.anim.slide_in_from_top)
-      builder.setExitAnimation(R.anim.slide_out_to_top)
+        builder.setEnterAnimation(R.anim.slide_in_from_top)
+        builder.setExitAnimation(R.anim.slide_out_to_top)
 
-      builder.getLayoutContainer()?.let {
-        val container = it.findViewById<View>(R.id.banner_container)
-        container.setBackgroundColor(colors[params.getString("style")!!]!!)
+        builder.getLayoutContainer()?.let {
+          val container = it.findViewById<View>(R.id.banner_container)
+          container.setBackgroundColor(colors[params.getString("style")!!]!!)
 
 
-        (container.parent as ViewGroup).apply {
-          this.setPadding(0, 0, 0, 0)
-          this.clipChildren = false
-          this.clipToPadding = false
-          (this.parent as ViewGroup).apply {
+          (container.parent as ViewGroup).apply {
+            this.setPadding(0, 0, 0, 0)
             this.clipChildren = false
             this.clipToPadding = false
-          }
-        }
-
-        if (params.hasKey("borderRadius")) {
-          val mViewOutlineProvider: ViewOutlineProvider = object : ViewOutlineProvider() {
-            override fun getOutline(view: View, outline: Outline) {
-              val cornerRadius = PixelUtil.toPixelFromDIP(params.getInt("borderRadius").toFloat())
-              val left = 0
-              val top = 0;
-              val right = view.width
-              val bottom = view.height
-              outline.setRoundRect(left, top, right, bottom, cornerRadius)
+            (this.parent as ViewGroup).apply {
+              this.clipChildren = false
+              this.clipToPadding = false
             }
           }
-          container.outlineProvider = mViewOutlineProvider
-          container.clipToOutline = true
+
+          if (params.hasKey("borderRadius")) {
+            val mViewOutlineProvider: ViewOutlineProvider = object : ViewOutlineProvider() {
+              override fun getOutline(view: View, outline: Outline) {
+                val cornerRadius = PixelUtil.toPixelFromDIP(params.getInt("borderRadius").toFloat())
+                val left = 0
+                val top = 0;
+                val right = view.width
+                val bottom = view.height
+                outline.setRoundRect(left, top, right, bottom, cornerRadius)
+              }
+            }
+            container.outlineProvider = mViewOutlineProvider
+            container.clipToOutline = true
+          }
+
+          if (params.hasKey("elevation")) {
+            container.elevation = params.getInt("elevation").toFloat()
+          }
+
         }
 
-        if (params.hasKey("elevation")) {
-          container.elevation = params.getInt("elevation").toFloat()
-        }
-
+        builder.enableClickAnimation(false)
+        builder.show()
       }
-
-      builder.enableClickAnimation(false)
-      builder.show()
-    }
+    })
   }
 }
