@@ -54,11 +54,15 @@ class NotificationBannerModule(reactContext: ReactApplicationContext) : ReactCon
           cornerRadius = PixelUtil.toPixelFromDIP(params.getInt("borderRadius").toFloat())
         }
         if (params.hasKey("title")) {
-          builder.setTitle(params.getString("title")!!)
+          params.getString("title")?.let {
+            builder.setText(it)
+          }
         }
 
         if (params.hasKey("subtitle")) {
-          builder.setText(params.getString("subtitle")!!)
+          params.getString("subtitle")?.let {
+            builder.setText(it)
+          }
         }
 
         if (params.hasKey("style")) {
