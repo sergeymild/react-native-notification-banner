@@ -1,6 +1,6 @@
 {
   "name": "react-native-notification-banner",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "React Native notification banners",
   "main": "src/index.tsx",
   "module": "src/index.tsx",
