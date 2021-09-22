@@ -1,11 +1,9 @@
 import * as React from 'react';
 
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
-import NotificationBanner from 'react-native-notification-banner';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { NotificationBanner } from 'react-native-notification-banner';
 
 export default function App() {
-  const [result, setResult] = React.useState<number | undefined>();
-
   return (
     <View style={styles.container}>
       <TouchableOpacity
@@ -15,8 +13,11 @@ export default function App() {
             title: 'Some title',
             subtitle: 'Some su',
             style: 'success',
-            duration: 3000,
+            duration: 6000,
             borderRadius: 14,
+            onPress: () => {
+              console.log('sssss');
+            },
           });
         }}
       >

@@ -21,6 +21,7 @@ interface Params {
   duration?: number;
   borderRadius?: number;
   elevation?: number;
+  onPress?: () => void
 }
 NotificationBanner.show(params);
 ```

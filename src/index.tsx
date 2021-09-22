@@ -7,12 +7,15 @@ interface Params {
   duration?: number;
   borderRadius?: number;
   elevation?: number;
+  onPress?: () => void;
 }
 
-type NotificationBannerType = {
-  show(params: Params): void;
-};
+const noop = () => {};
+export class NotificationBanner {
+  private constructor() {}
 
-const { NotificationBanner } = NativeModules;
-
-export default NotificationBanner as NotificationBannerType;
+  static show(params: Params) {
+    const onPress = params.onPress ? params.onPress : noop;
+    NativeModules.NotificationBanner.show(params, onPress);
+  }
+}

@@ -45,7 +45,7 @@ class NotificationBannerModule(reactContext: ReactApplicationContext) : ReactCon
   )
 
   @ReactMethod
-  fun show(params: ReadableMap) {
+  fun show(params: ReadableMap, callBack: Callback?) {
     val listener = OnHideAlertListener {
       currentActivity?.runOnUiThread {
         val builder = Alerter.create(currentActivity!!, layoutId = R.layout.alert_default_layout).hideIcon()
@@ -112,7 +112,19 @@ class NotificationBannerModule(reactContext: ReactApplicationContext) : ReactCon
         }
 
         builder.enableClickAnimation(false)
-        builder.show()
+        val alert = builder.show()
+        alert?.setDismissible(true)
+
+        var isClickHandled = false
+        builder.setOnClickListener(View.OnClickListener {
+          if (isClickHandled) return@OnClickListener
+          isClickHandled = true
+          callBack?.invoke()
+          val alert = alert ?: return@OnClickListener
+          val hideMethod = alert::class.java.getDeclaredMethod("hide")
+          hideMethod.isAccessible = true
+          hideMethod.invoke(alert)
+        })
       }
     }
     if (Alerter.isShowing) Alerter.hide(listener)

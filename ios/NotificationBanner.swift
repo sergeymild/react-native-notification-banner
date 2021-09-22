@@ -10,7 +10,7 @@ class NotificationBanner: NSObject {
     }
     
     @objc
-    func show(_ params: [String: Any]) -> Void {
+    func show(_ params: [String: Any], onPress: RCTResponseSenderBlock?) -> Void {
         var style: BannerStyle = .success
         let type = params["style"] as? String
         let duration = params["duration"] as? Int ?? 500
@@ -36,6 +36,9 @@ class NotificationBanner: NSObject {
                 shadowBlurRadius: 10,
                 shadowOffset: .init(horizontal: 3, vertical: 3)
             )
+            banner.onTap = {
+                onPress?([])
+            }
             self?.presentedBanner = banner
         }
     }
