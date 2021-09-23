@@ -7,10 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-
-		5E555C0D2413F4C50049A1A2 /* NotificationBanner.m in Sources */ = {isa = PBXBuildFile; fileRef = B3E7B5891CC2AC0600A0062D /* NotificationBanner.m */; };
-		F4FF95D7245B92E800C19C63 /*  NotificationBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4FF95D6245B92E800C19C63 /*  NotificationBanner.swift */; };
-
+		924F3C9F26FB79C800989C94 /* FloatingNotificationBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924F3C9226FB79C700989C94 /* FloatingNotificationBanner.swift */; };
+		924F3CA026FB79C800989C94 /* UIWindow+orientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924F3C9326FB79C700989C94 /* UIWindow+orientation.swift */; };
+		924F3CA126FB79C800989C94 /* BannerPositionFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924F3C9426FB79C700989C94 /* BannerPositionFrame.swift */; };
+		924F3CA226FB79C800989C94 /* BannerStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924F3C9526FB79C700989C94 /* BannerStyle.swift */; };
+		924F3CA326FB79C800989C94 /* StatusBarNotificationBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924F3C9626FB79C700989C94 /* StatusBarNotificationBanner.swift */; };
+		924F3CA426FB79C800989C94 /* NotificationBannerUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924F3C9726FB79C700989C94 /* NotificationBannerUtilities.swift */; };
+		924F3CA526FB79C800989C94 /* BannerColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924F3C9826FB79C700989C94 /* BannerColors.swift */; };
+		924F3CA626FB79C800989C94 /* String+heightForConstrainedWidth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924F3C9926FB79C700989C94 /* String+heightForConstrainedWidth.swift */; };
+		924F3CA726FB79C800989C94 /* GrowingNotificationBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924F3C9A26FB79C700989C94 /* GrowingNotificationBanner.swift */; };
+		924F3CA826FB79C800989C94 /* BannerHapticGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924F3C9B26FB79C700989C94 /* BannerHapticGenerator.swift */; };
+		924F3CA926FB79C800989C94 /* BaseNotificationBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924F3C9C26FB79C700989C94 /* BaseNotificationBanner.swift */; };
+		924F3CAA26FB79C800989C94 /* NotificationBannerQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924F3C9D26FB79C700989C94 /* NotificationBannerQueue.swift */; };
+		924F3CAB26FB79C800989C94 /* InternalNotificationBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 924F3C9E26FB79C700989C94 /* InternalNotificationBanner.swift */; };
+		F4FF95D7245B92E800C19C63 /* NotificationBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4FF95D6245B92E800C19C63 /* NotificationBanner.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -27,11 +37,22 @@
 
 /* Begin PBXFileReference section */
 		134814201AA4EA6300B7C361 /* libNotificationBanner.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libNotificationBanner.a; sourceTree = BUILT_PRODUCTS_DIR; };
-
+		924F3C9226FB79C700989C94 /* FloatingNotificationBanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FloatingNotificationBanner.swift; sourceTree = "<group>"; };
+		924F3C9326FB79C700989C94 /* UIWindow+orientation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIWindow+orientation.swift"; sourceTree = "<group>"; };
+		924F3C9426FB79C700989C94 /* BannerPositionFrame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BannerPositionFrame.swift; sourceTree = "<group>"; };
+		924F3C9526FB79C700989C94 /* BannerStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BannerStyle.swift; sourceTree = "<group>"; };
+		924F3C9626FB79C700989C94 /* StatusBarNotificationBanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusBarNotificationBanner.swift; sourceTree = "<group>"; };
+		924F3C9726FB79C700989C94 /* NotificationBannerUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationBannerUtilities.swift; sourceTree = "<group>"; };
+		924F3C9826FB79C700989C94 /* BannerColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BannerColors.swift; sourceTree = "<group>"; };
+		924F3C9926FB79C700989C94 /* String+heightForConstrainedWidth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+heightForConstrainedWidth.swift"; sourceTree = "<group>"; };
+		924F3C9A26FB79C700989C94 /* GrowingNotificationBanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GrowingNotificationBanner.swift; sourceTree = "<group>"; };
+		924F3C9B26FB79C700989C94 /* BannerHapticGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BannerHapticGenerator.swift; sourceTree = "<group>"; };
+		924F3C9C26FB79C700989C94 /* BaseNotificationBanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseNotificationBanner.swift; sourceTree = "<group>"; };
+		924F3C9D26FB79C700989C94 /* NotificationBannerQueue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationBannerQueue.swift; sourceTree = "<group>"; };
+		924F3C9E26FB79C700989C94 /* InternalNotificationBanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InternalNotificationBanner.swift; sourceTree = "<group>"; };
 		B3E7B5891CC2AC0600A0062D /* NotificationBanner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificationBanner.m; sourceTree = "<group>"; };
 		F4FF95D5245B92E700C19C63 /* NotificationBanner-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NotificationBanner-Bridging-Header.h"; sourceTree = "<group>"; };
 		F4FF95D6245B92E800C19C63 /* NotificationBanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationBanner.swift; sourceTree = "<group>"; };
-
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,13 +77,32 @@
 		58B511D21A9E6C8500147676 = {
 			isa = PBXGroup;
 			children = (
-
 				F4FF95D6245B92E800C19C63 /* NotificationBanner.swift */,
 				B3E7B5891CC2AC0600A0062D /* NotificationBanner.m */,
 				F4FF95D5245B92E700C19C63 /* NotificationBanner-Bridging-Header.h */,
-
+				924F3C9026FB79C700989C94 /* NotificationBanner */,
 				134814211AA4EA7D00B7C361 /* Products */,
 			);
+			sourceTree = "<group>";
+		};
+		924F3C9026FB79C700989C94 /* NotificationBanner */ = {
+			isa = PBXGroup;
+			children = (
+				924F3C9226FB79C700989C94 /* FloatingNotificationBanner.swift */,
+				924F3C9326FB79C700989C94 /* UIWindow+orientation.swift */,
+				924F3C9426FB79C700989C94 /* BannerPositionFrame.swift */,
+				924F3C9526FB79C700989C94 /* BannerStyle.swift */,
+				924F3C9626FB79C700989C94 /* StatusBarNotificationBanner.swift */,
+				924F3C9726FB79C700989C94 /* NotificationBannerUtilities.swift */,
+				924F3C9826FB79C700989C94 /* BannerColors.swift */,
+				924F3C9926FB79C700989C94 /* String+heightForConstrainedWidth.swift */,
+				924F3C9A26FB79C700989C94 /* GrowingNotificationBanner.swift */,
+				924F3C9B26FB79C700989C94 /* BannerHapticGenerator.swift */,
+				924F3C9C26FB79C700989C94 /* BaseNotificationBanner.swift */,
+				924F3C9D26FB79C700989C94 /* NotificationBannerQueue.swift */,
+				924F3C9E26FB79C700989C94 /* InternalNotificationBanner.swift */,
+			);
+			path = NotificationBanner;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -122,10 +162,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-
+				924F3CA626FB79C800989C94 /* String+heightForConstrainedWidth.swift in Sources */,
+				924F3CA826FB79C800989C94 /* BannerHapticGenerator.swift in Sources */,
+				924F3CA326FB79C800989C94 /* StatusBarNotificationBanner.swift in Sources */,
+				924F3C9F26FB79C800989C94 /* FloatingNotificationBanner.swift in Sources */,
+				924F3CAA26FB79C800989C94 /* NotificationBannerQueue.swift in Sources */,
+				924F3CA226FB79C800989C94 /* BannerStyle.swift in Sources */,
+				924F3CA726FB79C800989C94 /* GrowingNotificationBanner.swift in Sources */,
+				924F3CA026FB79C800989C94 /* UIWindow+orientation.swift in Sources */,
+				924F3CAB26FB79C800989C94 /* InternalNotificationBanner.swift in Sources */,
+				924F3CA126FB79C800989C94 /* BannerPositionFrame.swift in Sources */,
+				924F3CA526FB79C800989C94 /* BannerColors.swift in Sources */,
+				924F3CA426FB79C800989C94 /* NotificationBannerUtilities.swift in Sources */,
 				F4FF95D7245B92E800C19C63 /* NotificationBanner.swift in Sources */,
-				B3E7B58A1CC2AC0600A0062D /* NotificationBanner.m in Sources */,
-
+				924F3CA926FB79C800989C94 /* BaseNotificationBanner.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -238,11 +288,9 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = NotificationBanner;
 				SKIP_INSTALL = YES;
-
 				SWIFT_OBJC_BRIDGING_HEADER = "NotificationBanner-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
-
 			};
 			name = Debug;
 		};
@@ -259,10 +307,8 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = NotificationBanner;
 				SKIP_INSTALL = YES;
-
 				SWIFT_OBJC_BRIDGING_HEADER = "NotificationBanner-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
-
 			};
 			name = Release;
 		};

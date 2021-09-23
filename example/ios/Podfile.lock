@@ -19,10 +19,6 @@ PODS:
     - DoubleConversion
     - glog
   - glog (0.3.5)
-  - MarqueeLabel (4.0.5)
-  - NotificationBannerSwift (3.0.6):
-    - MarqueeLabel (~> 4.0.5)
-    - SnapKit (~> 5.0.1)
   - RCTRequired (0.63.4)
   - RCTTypeSafety (0.63.4):
     - FBLazyVector (= 0.63.4)
@@ -189,9 +185,9 @@ PODS:
     - React-cxxreact (= 0.63.4)
     - React-jsi (= 0.63.4)
   - React-jsinspector (0.63.4)
-  - react-native-notification-banner (0.4.0):
-    - NotificationBannerSwift
+  - react-native-notification-banner (0.5.0):
     - React-Core
+    - SnapKit
   - React-RCTActionSheet (0.63.4):
     - React-Core/RCTActionSheetHeaders (= 0.63.4)
   - React-RCTAnimation (0.63.4):
@@ -289,8 +285,6 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - boost-for-react-native
-    - MarqueeLabel
-    - NotificationBannerSwift
     - SnapKit
 
 EXTERNAL SOURCES:
@@ -356,8 +350,6 @@ SPEC CHECKSUMS:
   FBReactNativeSpec: f2c97f2529dd79c083355182cc158c9f98f4bd6e
   Folly: b73c3869541e86821df3c387eb0af5f65addfab4
   glog: 40a13f7840415b9a77023fbcae0f1e6f43192af3
-  MarqueeLabel: 00cc0bcd087111dca575878b3531af980559707d
-  NotificationBannerSwift: 7021be2338f8f29cf424b0aca43da462bf9e2a1a
   RCTRequired: 082f10cd3f905d6c124597fd1c14f6f2655ff65e
   RCTTypeSafety: 8c9c544ecbf20337d069e4ae7fd9a377aadf504b
   React: b0a957a2c44da4113b0c4c9853d8387f8e64e615
@@ -368,7 +360,7 @@ SPEC CHECKSUMS:
   React-jsi: a0418934cf48f25b485631deb27c64dc40fb4c31
   React-jsiexecutor: 93bd528844ad21dc07aab1c67cb10abae6df6949
   React-jsinspector: 58aef7155bc9a9683f5b60b35eccea8722a4f53a
-  react-native-notification-banner: 18bb0e107b36479e16b119334282d069eccd5ad5
+  react-native-notification-banner: 3697a9b3b026edcb90aa4aaf18608d98840fcb52
   React-RCTActionSheet: 89a0ca9f4a06c1f93c26067af074ccdce0f40336
   React-RCTAnimation: 1bde3ecc0c104c55df246eda516e0deb03c4e49b
   React-RCTBlob: a97d378b527740cc667e03ebfa183a75231ab0f0

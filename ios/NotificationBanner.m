@@ -2,11 +2,9 @@
 
 @interface RCT_EXTERN_MODULE(NotificationBanner, NSObject)
 
-RCT_EXTERN_METHOD(multiply:(float)a withB:(float)b
-                 withResolver:(RCTPromiseResolveBlock)resolve
-                 withRejecter:(RCTPromiseRejectBlock)reject)
-
 RCT_EXTERN_METHOD(show:(NSDictionary*)params
-                  onPress:(nullable RCTResponseSenderBlock)onPress)
+                  onPress:(RCTResponseSenderBlock)onPress)
+
+RCT_EXTERN_METHOD(configure:(NSDictionary*)params)
 
 @end
