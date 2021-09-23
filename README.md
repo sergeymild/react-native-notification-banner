@@ -13,6 +13,21 @@ No
 ```js
 import NotificationBanner from "react-native-notification-banner";
 
+// initial configuration
+interface ConfigurationParams {
+  cornerRadius?: number;
+  errorIcon?: ImageSourcePropType;
+  elevation?: number;
+  successBackgroundColor?: string;
+  errorBackgroundColor?: string;
+  successTitleColor?: string;
+  successSubtitleColor?: string;
+  errorTitleColor?: string;
+  errorSubtitleColor?: string;
+}
+
+NotificationBanner.configure(ConfigurationParams);
+
 // ...
 interface Params {
   title?: string;
