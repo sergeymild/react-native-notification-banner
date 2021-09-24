@@ -1,5 +1,6 @@
 package com.reactnativenotificationbanner
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
@@ -10,6 +11,7 @@ import com.tapadoo.alerter.Alerter
 import android.util.TypedValue
 
 import android.graphics.Outline
+import android.util.Base64
 
 import android.view.ViewOutlineProvider
 import android.widget.TextView
@@ -17,6 +19,8 @@ import com.facebook.react.uimanager.PixelUtil
 import com.facebook.react.views.imagehelper.ResourceDrawableIdHelper
 import com.tapadoo.alerter.Alert
 import com.tapadoo.alerter.OnHideAlertListener
+import java.lang.Exception
+import java.net.URI
 import java.net.URL
 
 
@@ -34,7 +38,7 @@ fun colorFromString(color: String?): Int? {
 
 class DefaultStyle(
   var cornerRadius: Float,
-  var errorIcon: Any?,
+  var errorIcon: Bitmap?,
   var successBackgroundColor: Int?,
   var errorBackgroundColor: Int?,
   var successTitleColor: Int?,
@@ -43,6 +47,26 @@ class DefaultStyle(
   var errorSubtitleColor: Int?,
   var elevation: Float
 )
+
+fun provideIcon(context: Context, source: String?): Bitmap? {
+  source ?: return null
+  val resourceId = context.resources.getIdentifier(source, "drawable", context.packageName)
+
+  if (resourceId == 0) {
+    // resource is not a local file
+    // could be a URL, base64.
+    val uri = URI(source)
+    val scheme = uri.scheme ?: throw Exception("Invalid URI scheme")
+    if (scheme == "data") {
+      val parts: Array<String> = source.split(",").toTypedArray()
+      val base64Uri = parts[1]
+      val decodedString = Base64.decode(base64Uri, Base64.DEFAULT)
+      return BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
+    }
+    return BitmapFactory.decodeStream(uri.toURL().openConnection().getInputStream())
+  }
+  return BitmapFactory.decodeResource(context.resources, resourceId)
+}
 
 class NotificationBannerModule(reactContext: ReactApplicationContext) : ReactContextBaseJavaModule(reactContext) {
   var defaultStyle: DefaultStyle? = null
@@ -53,20 +77,19 @@ class NotificationBannerModule(reactContext: ReactApplicationContext) : ReactCon
 
   @ReactMethod
   fun configure(params: ReadableMap) {
-    val bytes = URL(params.getString("errorIcon")).readBytes()
-    ResourceDrawableIdHelper.getInstance().getResourceDrawableId(reactApplicationContext, params.getString("errorIcon"))
-    defaultStyle = DefaultStyle(
-      cornerRadius = PixelUtil.toPixelFromDIP(params.getInt("cornerRadius").toFloat()),
-      errorIcon = BitmapFactory.decodeByteArray(bytes, 0, bytes.size),
-      successBackgroundColor = colorFromString(params.getString("successBackgroundColor")),
-      errorBackgroundColor = colorFromString(params.getString("errorBackgroundColor")),
-      successTitleColor = colorFromString(params.getString("successTitleColor")),
-      successSubtitleColor = colorFromString(params.getString("successSubtitleColor")),
-      errorTitleColor = colorFromString(params.getString("errorTitleColor")),
-      errorSubtitleColor = colorFromString(params.getString("errorSubtitleColor")),
-      elevation = PixelUtil.toPixelFromDIP(params.getInt("elevation").toFloat())
-    )
-
+    currentActivity?.runOnUiThread {
+      defaultStyle = DefaultStyle(
+        cornerRadius = PixelUtil.toPixelFromDIP(params.getInt("cornerRadius").toFloat()),
+        errorIcon = provideIcon(currentActivity!!, params.getString("errorIcon")),
+        successBackgroundColor = colorFromString(params.getString("successBackgroundColor")),
+        errorBackgroundColor = colorFromString(params.getString("errorBackgroundColor")),
+        successTitleColor = colorFromString(params.getString("successTitleColor")),
+        successSubtitleColor = colorFromString(params.getString("successSubtitleColor")),
+        errorTitleColor = colorFromString(params.getString("errorTitleColor")),
+        errorSubtitleColor = colorFromString(params.getString("errorSubtitleColor")),
+        elevation = PixelUtil.toPixelFromDIP(params.getInt("elevation").toFloat())
+      )
+    }
   }
 
   val colors = mutableMapOf(
@@ -125,7 +148,7 @@ class NotificationBannerModule(reactContext: ReactApplicationContext) : ReactCon
         var showIcon = false
         if (style == "error" && defaultStyle?.errorIcon != null) {
           showIcon = true
-          builder.setIcon(defaultStyle?.errorIcon as Bitmap)
+          defaultStyle?.errorIcon?.let { builder.setIcon(it) }
           builder.enableIconPulse(false)
           builder.showIcon(true)
         }
