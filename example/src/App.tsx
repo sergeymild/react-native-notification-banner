@@ -7,16 +7,35 @@ import { useEffect } from 'react';
 export default function App() {
   useEffect(() => {
     NotificationBanner.configure({
-      successBackgroundColor: '#ffffff',
-      successTitleColor: '#1f1f1f',
-      successSubtitleColor: '#775656',
       cornerRadius: 1000,
 
-      errorBackgroundColor: '#d95959',
-      errorTitleColor: '#2c5181',
-      errorSubtitleColor: '#961fa2',
-      errorIcon: require('./assets/icError.png'),
-      elevation: 5,
+      elevation: 20,
+      padding: 20,
+
+      shadow: {
+        color: '#9C9C9C',
+        offset: { width: 0, height: 8 },
+        opacity: 0.16,
+        radius: 20,
+      },
+
+      success: {
+        backgroundColor: '#ffffff',
+        titleColor: '#1f1f1f',
+        messageColor: '#775656',
+        titleFont: {
+          size: 15,
+        },
+      },
+
+      error: {
+        backgroundColor: 'orange',
+        titleColor: 'yellow',
+        icon: require('./assets/icError.png'),
+        titleFont: {
+          size: 12,
+        },
+      },
     });
   });
 
@@ -26,17 +45,33 @@ export default function App() {
         style={{ marginTop: 100 }}
         onPress={() => {
           NotificationBanner.show({
-            title: 'Some title',
-            subtitle: 'dsjdskdjs',
-            style: 'success',
+            title: 'error title',
+            message: 'error subtitle',
+            style: 'error',
             duration: 6000,
             onPress: () => {
-              console.log('sssss');
+              console.log('error press');
             },
           });
         }}
       >
-        <Text>Press</Text>
+        <Text>Error</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={{ marginTop: 100 }}
+        onPress={() => {
+          NotificationBanner.show({
+            title: 'Success title',
+            style: 'success',
+            duration: 6000,
+            onPress: () => {
+              console.log('Success press');
+            },
+          });
+        }}
+      >
+        <Text>Success</Text>
       </TouchableOpacity>
     </View>
   );
@@ -47,6 +82,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    flexDirection: 'column',
   },
   box: {
     width: 60,

@@ -130,9 +130,6 @@ open class BaseNotificationBanner: UIView {
     /// The maximum number of banners simultaneously visible on screen
     internal var maximumVisibleBanners: Int = 1
 
-    /// The default padding between edges and views
-    internal var padding: CGFloat = 16.0
-
     /// The view controller to display the banner on. This is useful if you are wanting to display a banner underneath a navigation bar
     internal weak var parentViewController: UIViewController?
 

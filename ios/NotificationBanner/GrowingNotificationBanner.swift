@@ -35,7 +35,7 @@ open class GrowingNotificationBanner: BaseNotificationBanner {
                 // Calculate the height based on contents of labels
                 
                 // Determine available width for displaying the label
-                var boundingWidth = UIScreen.main.bounds.width - padding * 2
+                var boundingWidth = UIScreen.main.bounds.width - currentAppearance.padding * 2
                 
                 // Substract safeAreaInsets from width, if available
                 // We have to use keyWindow to ask for safeAreaInsets as `self` only knows its' safeAreaInsets in layoutSubviews
@@ -46,11 +46,11 @@ open class GrowingNotificationBanner: BaseNotificationBanner {
                 }
                 
                 if leftView != nil {
-                    boundingWidth -= sideViewSize + padding
+                    boundingWidth -= sideViewSize + (currentAppearance.padding)
                 }
                 
                 if rightView != nil {
-                    boundingWidth -= sideViewSize + padding
+                    boundingWidth -= sideViewSize + (currentAppearance.padding)
                 }
                 
                 let titleHeight = ceil(titleLabel?.sizeThatFits(
@@ -123,7 +123,7 @@ open class GrowingNotificationBanner: BaseNotificationBanner {
         labelsView.spacing = innerSpacing
         
         let outerStackView = UIStackView()
-        outerStackView.spacing = padding
+        outerStackView.spacing = (currentAppearance.padding)
         
         switch iconPosition {
         case .top:
@@ -169,11 +169,11 @@ open class GrowingNotificationBanner: BaseNotificationBanner {
         contentView.addSubview(outerStackView)
         outerStackView.snp.makeConstraints { (make) in
             if #available(iOS 11.0, *) {
-                make.left.equalTo(safeAreaLayoutGuide).offset(padding)
-                make.right.equalTo(safeAreaLayoutGuide).offset(-padding)
+                make.left.equalTo(safeAreaLayoutGuide).offset(currentAppearance.padding)
+                make.right.equalTo(safeAreaLayoutGuide).offset(-currentAppearance.padding)
             } else {
-                make.left.equalToSuperview().offset(padding)
-                make.right.equalToSuperview().offset(-padding)
+                make.left.equalToSuperview().offset(currentAppearance.padding)
+                make.right.equalToSuperview().offset(-currentAppearance.padding)
             }
             
             make.centerY.equalToSuperview()

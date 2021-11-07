@@ -24,30 +24,6 @@ import java.net.URI
 import java.net.URL
 
 
-fun argb(alpha: Float, red: Float, green: Float, blue: Float): Int {
-  return (alpha * 255.0f + 0.5f).toInt() shl 24 or
-    ((red * 255.0f + 0.5f).toInt() shl 16) or
-    ((green * 255.0f + 0.5f).toInt() shl 8) or
-    (blue * 255.0f + 0.5f).toInt()
-}
-
-fun colorFromString(color: String?): Int? {
-  if (color == null || !color.startsWith("#")) return null
-  return Color.parseColor(color)
-}
-
-class DefaultStyle(
-  var cornerRadius: Float,
-  var errorIcon: Bitmap?,
-  var successBackgroundColor: Int?,
-  var errorBackgroundColor: Int?,
-  var successTitleColor: Int?,
-  var successSubtitleColor: Int?,
-  var errorTitleColor: Int?,
-  var errorSubtitleColor: Int?,
-  var elevation: Float
-)
-
 fun provideIcon(context: Context, source: String?): Bitmap? {
   source ?: return null
   val resourceId = context.resources.getIdentifier(source, "drawable", context.packageName)
@@ -68,8 +44,21 @@ fun provideIcon(context: Context, source: String?): Bitmap? {
   return BitmapFactory.decodeResource(context.resources, resourceId)
 }
 
-class NotificationBannerModule(reactContext: ReactApplicationContext) : ReactContextBaseJavaModule(reactContext) {
-  var defaultStyle: DefaultStyle? = null
+fun colorFor(context: Context, params: ReadableMap, key: String, default: Int): Int {
+  if (!params.hasKey(key)) return default
+  return ColorPropConverter.getColor(params.getDouble(key), context)
+}
+
+fun px(value: Float): Float {
+  return PixelUtil.toPixelFromDIP(value)
+}
+fun pxFor(params: ReadableMap, key: String, default: Float): Float {
+  if (!params.hasKey(key)) return default
+  return PixelUtil.toPixelFromDIP(params.getDouble(key))
+}
+
+class NotificationBannerModule(reactContext: ReactApplicationContext) :
+  ReactContextBaseJavaModule(reactContext) {
 
   override fun getName(): String {
     return "NotificationBanner"
@@ -77,37 +66,70 @@ class NotificationBannerModule(reactContext: ReactApplicationContext) : ReactCon
 
   @ReactMethod
   fun configure(params: ReadableMap) {
-    currentActivity?.runOnUiThread {
-      defaultStyle = DefaultStyle(
-        cornerRadius = PixelUtil.toPixelFromDIP(params.getInt("cornerRadius").toFloat()),
-        errorIcon = provideIcon(currentActivity!!, params.getString("errorIcon")),
-        successBackgroundColor = colorFromString(params.getString("successBackgroundColor")),
-        errorBackgroundColor = colorFromString(params.getString("errorBackgroundColor")),
-        successTitleColor = colorFromString(params.getString("successTitleColor")),
-        successSubtitleColor = colorFromString(params.getString("successSubtitleColor")),
-        errorTitleColor = colorFromString(params.getString("errorTitleColor")),
-        errorSubtitleColor = colorFromString(params.getString("errorSubtitleColor")),
-        elevation = PixelUtil.toPixelFromDIP(params.getInt("elevation").toFloat())
+    val context = currentActivity!!
+
+
+    var errorStyle = currentAppearance.error
+    if (params.hasKey("error")) {
+      val currentError = bannerAppearance(BannerStyle.error)
+      val error = params.getMap("error")!!
+      var font = currentError.titleFont
+      if (error.hasKey("titleFont")) {
+        val f = error.getMap("titleFont")!!
+        font = Font(size = f.getDouble("size"), family = null)
+      }
+
+      errorStyle = ErrorStyle(
+        icon = provideIcon(context, error.getString("icon")),
+        backgroundColor = colorFor(context, error, "backgroundColor", currentError.backgroundColor),
+        titleColor = colorFor(context, error, "titleColor", currentError.titleColor),
+        messageColor = colorFor(context, error, "messageColor", currentError.messageColor),
+        titleFont = font
       )
     }
-  }
 
-  val colors = mutableMapOf(
-    "error" to argb(1.0f, 0.90f, 0.31f, 0.26f),
-    "info" to argb(1.0f, 0.23f, 0.60f, 0.85f),
-    "success" to argb(1.0f, 0.22f, 0.80f, 0.46f)
-  )
+    var successStyle = currentAppearance.success
+    if (params.hasKey("success")) {
+      val currentSuccess = bannerAppearance(BannerStyle.success)
+      val error = params.getMap("success")!!
+      var font = currentSuccess.titleFont
+      if (error.hasKey("titleFont")) {
+        val f = error.getMap("titleFont")!!
+        font = Font(size = f.getDouble("size"), family = null)
+      }
+
+      successStyle = SuccessStyle(
+        icon = provideIcon(context, error.getString("icon")),
+        backgroundColor = colorFor(context, error, "backgroundColor", currentSuccess.backgroundColor),
+        titleColor = colorFor(context, error, "titleColor", currentSuccess.titleColor),
+        messageColor = colorFor(context, error, "messageColor", currentSuccess.messageColor),
+        titleFont = font
+      )
+    }
+
+
+    val defaultStyle = DefaultStyle(
+      elevation = if (params.hasKey("elevation")) params.getDouble("elevation").toFloat() else currentAppearance.elevation,
+      cornerRadius = pxFor(params, "cornerRadius", px(1000f)),
+      error = errorStyle,
+      success = successStyle,
+      info = currentAppearance.info,
+      padding = currentAppearance.padding,
+      margin = currentAppearance.margin
+    )
+    setNewAppearance(defaultStyle)
+  }
 
   @ReactMethod
   fun show(params: ReadableMap, callBack: Callback?) {
     val listener = OnHideAlertListener {
       currentActivity?.runOnUiThread {
-        val style = params.getString("style")!!
-        val builder = Alerter.create(currentActivity!!, layoutId = R.layout.alert_default_layout).hideIcon()
-        val cornerRadius = defaultStyle?.cornerRadius ?: 0f
+        val style = styleFrom(params.getString("style")!!)
+        val builder =
+          Alerter.create(currentActivity!!, layoutId = R.layout.alert_default_layout).hideIcon()
 
         params.getString("title")?.let { builder.setTitle(it) }
-        params.getString("subtitle")?.let { builder.setText(it) }
+        params.getString("message")?.let { builder.setText(it) }
 
 
 
@@ -117,38 +139,13 @@ class NotificationBannerModule(reactContext: ReactApplicationContext) : ReactCon
         builder.setEnterAnimation(R.anim.slide_in_from_top)
         builder.setExitAnimation(R.anim.slide_out_to_top)
 
-        var backgroundColor = colors[style]!!
-        var titleColor = Color.WHITE
-        var subtitleColor = Color.WHITE
 
-        if (style == "error" && defaultStyle?.errorBackgroundColor != null) {
-          backgroundColor = defaultStyle!!.errorBackgroundColor!!
-        }
-
-        if (style == "success" && defaultStyle?.successBackgroundColor != null) {
-          backgroundColor = defaultStyle!!.successBackgroundColor!!
-        }
-
-        if (style == "error" && defaultStyle?.errorTitleColor != null) {
-          titleColor = defaultStyle!!.errorTitleColor!!
-        }
-
-        if (style == "success" && defaultStyle?.successTitleColor != null) {
-          titleColor = defaultStyle!!.successTitleColor!!
-        }
-
-        if (style == "error" && defaultStyle?.errorSubtitleColor != null) {
-          subtitleColor = defaultStyle!!.errorSubtitleColor!!
-        }
-
-        if (style == "success" && defaultStyle?.successSubtitleColor != null) {
-          subtitleColor = defaultStyle!!.successSubtitleColor!!
-        }
+        val bannerStyle = bannerAppearance(style)
 
         var showIcon = false
-        if (style == "error" && defaultStyle?.errorIcon != null) {
+        bannerStyle.icon?.let {
           showIcon = true
-          defaultStyle?.errorIcon?.let { builder.setIcon(it) }
+          builder.setIcon(it)
           builder.enableIconPulse(false)
           builder.showIcon(true)
         }
@@ -161,9 +158,16 @@ class NotificationBannerModule(reactContext: ReactApplicationContext) : ReactCon
           if (showIcon) {
             (textContainer.layoutParams as ViewGroup.MarginLayoutParams).marginStart = 0
           }
-          title.setTextColor(titleColor)
-          subtitle.setTextColor(subtitleColor)
-          container.setBackgroundColor(backgroundColor)
+          textContainer.setPadding(
+            px(currentAppearance.padding).toInt(),
+            px(16f).toInt(),
+            px(currentAppearance.padding).toInt(),
+            px(16f).toInt()
+          )
+          title.setTextColor(bannerStyle.titleColor)
+          title.setTextSize(TypedValue.COMPLEX_UNIT_SP, bannerStyle.titleFont.size.toFloat())
+          subtitle.setTextColor(bannerStyle.messageColor)
+          container.setBackgroundColor(bannerStyle.backgroundColor)
 
 
           (container.parent as ViewGroup).apply {
@@ -183,17 +187,13 @@ class NotificationBannerModule(reactContext: ReactApplicationContext) : ReactCon
               val top = 0;
               val right = view.width
               val bottom = view.height
-              outline.setRoundRect(left, top, right, bottom, cornerRadius)
+              outline.setRoundRect(left, top, right, bottom, px(currentAppearance.cornerRadius))
             }
           }
           container.outlineProvider = mViewOutlineProvider
           container.clipToOutline = true
 
-
-          if (defaultStyle?.elevation != null) {
-            container.elevation = defaultStyle?.elevation ?: 0f
-          }
-
+          container.elevation = px(currentAppearance.elevation)
         }
 
         builder.enableClickAnimation(false)

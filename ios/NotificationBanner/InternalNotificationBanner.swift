@@ -119,15 +119,15 @@ open class InternalNotificationBanner: BaseNotificationBanner {
             make.centerY.equalToSuperview().offset(heightAdjustment / 4)
             
             if let leftView = leftView {
-                make.left.equalTo(leftView.snp.right).offset(padding)
+                make.left.equalTo(leftView.snp.right).offset(8)
             } else {
-                make.left.equalToSuperview().offset(padding)
+                make.left.equalToSuperview().offset(currentAppearance.padding)
             }
             
             if let rightView = rightView {
-                make.right.equalTo(rightView.snp.left).offset(-padding)
+                make.right.equalTo(rightView.snp.left).offset(-currentAppearance.padding)
             } else {
-                make.right.equalToSuperview().offset(-padding)
+                make.right.equalToSuperview().offset(-currentAppearance.padding)
             }
             
             if let subtitleLabel = subtitleLabel {
