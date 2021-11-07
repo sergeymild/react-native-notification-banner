@@ -38,8 +38,8 @@ interface ConfigurationParams {
     opacity: number;
   };
 
-  readonly error: Style;
-  readonly success: Style;
+  readonly error?: Style;
+  readonly success?: Style;
 }
 
 const noop = () => {};
