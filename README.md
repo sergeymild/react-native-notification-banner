@@ -13,17 +13,37 @@ No
 ```js
 import NotificationBanner from "react-native-notification-banner";
 
-// initial configuration
+
+interface Style {
+  backgroundColor?: string;
+  titleColor?: string;
+  messageColor?: string;
+  icon?: ImageSourcePropType;
+  titleFont?: {
+    size?: number;
+    // IOS only
+    family?: string;
+  };
+}
+
 interface ConfigurationParams {
   cornerRadius?: number;
-  errorIcon?: ImageSourcePropType;
+  margin?: number;
+  padding?: number;
+
+  // Android only
   elevation?: number;
-  successBackgroundColor?: string;
-  errorBackgroundColor?: string;
-  successTitleColor?: string;
-  successSubtitleColor?: string;
-  errorTitleColor?: string;
-  errorSubtitleColor?: string;
+
+  // IOS only
+  readonly shadow?: {
+    offset: { width: number; height: number };
+    color: string;
+    radius: number;
+    opacity: number;
+  };
+
+  readonly error: Style;
+  readonly success: Style;
 }
 
 NotificationBanner.configure(ConfigurationParams);
@@ -31,12 +51,11 @@ NotificationBanner.configure(ConfigurationParams);
 // ...
 interface Params {
   title?: string;
-  subtitle?: string;
+  message?: string;
   style?: 'success' | 'error' | 'info';
   duration?: number;
-  borderRadius?: number;
-  elevation?: number;
-  onPress?: () => void
+  icon?: number;
+  onPress?: () => void;
 }
 NotificationBanner.show(params);
 ```
