@@ -66,7 +66,7 @@ class NotificationBannerModule(reactContext: ReactApplicationContext) :
 
   @ReactMethod
   fun configure(params: ReadableMap) {
-    val context = currentActivity!!
+    val context = currentActivity ?: reactApplicationContext
 
 
     var errorStyle = currentAppearance.error
@@ -124,9 +124,10 @@ class NotificationBannerModule(reactContext: ReactApplicationContext) :
   fun show(params: ReadableMap, callBack: Callback?) {
     val listener = OnHideAlertListener {
       currentActivity?.runOnUiThread {
+        val activity = currentActivity ?: return@runOnUiThread
         val style = styleFrom(params.getString("style")!!)
         val builder =
-          Alerter.create(currentActivity!!, layoutId = R.layout.alert_default_layout).hideIcon()
+          Alerter.create(activity, layoutId = R.layout.alert_default_layout).hideIcon()
 
         params.getString("title")?.let { builder.setTitle(it) }
         params.getString("message")?.let { builder.setText(it) }
