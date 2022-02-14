@@ -24,12 +24,6 @@ open class FloatingNotificationBanner: GrowingNotificationBanner {
     public init(
         title: String? = nil,
         subtitle: String? = nil,
-        titleFont: UIFont? = nil,
-        titleColor: UIColor? = nil,
-        titleTextAlign: NSTextAlignment? = nil,
-        subtitleFont: UIFont? = nil,
-        subtitleColor: UIColor? = nil,
-        subtitleTextAlign: NSTextAlignment? = nil,
         leftView: UIView? = nil,
         rightView: UIView? = nil,
         style: BannerStyle = .info,
@@ -46,32 +40,6 @@ open class FloatingNotificationBanner: GrowingNotificationBanner {
             backgroundColor: backgroundColor,
             iconPosition: iconPosition
         )
-        
-        if let titleFont = titleFont {
-            self.titleFont = titleFont
-            titleLabel?.font = titleFont
-        }
-        
-        if let titleColor = titleColor {
-            titleLabel?.textColor = titleColor
-        }
-        
-        if let titleTextAlign = titleTextAlign {
-            titleLabel?.textAlignment = titleTextAlign
-        }
-        
-        if let subtitleFont = subtitleFont {
-            self.subtitleFont = subtitleFont
-            subtitleLabel?.font = subtitleFont
-        }
-        
-        if let subtitleColor = subtitleColor {
-            subtitleLabel?.textColor = subtitleColor
-        }
-        
-        if let subtitleTextAlign = subtitleTextAlign {
-            subtitleLabel?.textAlignment = subtitleTextAlign
-        }
     }
     
     public init(customView: UIView) {
