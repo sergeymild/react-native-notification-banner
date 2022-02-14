@@ -62,6 +62,13 @@ open class BaseNotificationBanner: UIView {
             customBannerHeight = newValue
         }
     }
+    
+    /// The height of the banner when it is presented
+    public var bannerWidth: CGFloat {
+        get {
+            return 0
+        }
+    }
 
     /// The topmost label of the notification if a custom view is not desired
     public internal(set) var titleLabel: UILabel?
@@ -290,7 +297,7 @@ open class BaseNotificationBanner: UIView {
         guard let window = appWindow else { return }
         bannerPositionFrame = BannerPositionFrame(
             bannerPosition: bannerPosition,
-            bannerWidth: window.width,
+            bannerWidth: bannerWidth,
             bannerHeight: bannerHeight,
             maxY: maximumYPosition(),
             finishYOffset: finishBannerYOffset(),
@@ -527,7 +534,7 @@ open class BaseNotificationBanner: UIView {
 
         bannerPositionFrame = BannerPositionFrame(
             bannerPosition: bannerPosition,
-            bannerWidth: window.width,
+            bannerWidth: bannerWidth,
             bannerHeight: bannerHeight,
             maxY: maximumYPosition(),
             finishYOffset: finishBannerYOffset(),

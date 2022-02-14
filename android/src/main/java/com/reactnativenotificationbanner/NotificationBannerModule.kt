@@ -12,8 +12,10 @@ import android.util.TypedValue
 
 import android.graphics.Outline
 import android.util.Base64
+import android.view.Gravity
 
 import android.view.ViewOutlineProvider
+import android.widget.LinearLayout
 import android.widget.TextView
 import com.facebook.react.uimanager.PixelUtil
 import com.facebook.react.views.imagehelper.ResourceDrawableIdHelper
@@ -155,6 +157,9 @@ class NotificationBannerModule(reactContext: ReactApplicationContext) :
           val container = it.findViewById<View>(R.id.banner_container)
           val textContainer = it.findViewById<View>(R.id.text_container)
           val title = it.findViewById<TextView>(R.id.tvTitle)
+          (title?.layoutParams as? LinearLayout.LayoutParams)?.apply {
+            gravity = Gravity.CENTER_HORIZONTAL
+          }
           val subtitle = it.findViewById<TextView>(R.id.tvText)
           if (showIcon) {
             (textContainer.layoutParams as ViewGroup.MarginLayoutParams).marginStart = 0

@@ -13,7 +13,9 @@
   <LinearLayout
     android:id="@+id/banner_container"
     android:orientation="horizontal"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
+    android:minWidth="150dp"
+    android:layout_gravity="center_horizontal"
     android:elevation="4dp"
     android:clipChildren="false"
     android:clipToPadding="false"
@@ -45,6 +47,7 @@
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
         android:textAppearance="@style/AlertTextAppearance.Title"
         android:textColor="@android:color/white"
         android:visibility="gone"

@@ -61,7 +61,7 @@ class BannerPositionFrame {
         - parameter bannerPosition: The position the notification banners should slide in from
         - parameter bannerWidth: The width of the notification banner
         - parameter bannerHeight: The height of the notification banner
-        - parameter maxY: The maximum `y` position the banner can slide in from. This value is only used 
+        - parameter maxY: The maximum `y` position the banner can slide in from. This value is only used
         if the bannerPosition is .bottom
         - parameter edgeInsets: The sides edges insets from superview
      */
@@ -78,16 +78,16 @@ class BannerPositionFrame {
         switch bannerPosition {
         case .bottom:
             return CGRect(
-                x: edgeInsets.left,
+                x: (UIScreen.main.bounds.width - bannerWidth) / 2,
                 y: maxY,
-                width: bannerWidth - edgeInsets.left - edgeInsets.right,
+                width: bannerWidth,
                 height: bannerHeight
             )
         case .top:
             return CGRect(
-                x: edgeInsets.left,
+                x: (UIScreen.main.bounds.width - bannerWidth) / 2,
                 y: -bannerHeight,
-                width: bannerWidth - edgeInsets.left - edgeInsets.right,
+                width: bannerWidth,
                 height: bannerHeight
             )
 
@@ -117,13 +117,13 @@ class BannerPositionFrame {
         switch bannerPosition {
         case .bottom:
             return CGRect(
-                x: edgeInsets.left,
+                x: (UIScreen.main.bounds.width - bannerWidth) / 2,
                 y: maxY - bannerHeight - edgeInsets.bottom - finishYOffset,
                 width: startFrame.width,
                 height: startFrame.height)
         case .top:
             return CGRect(
-                x: edgeInsets.left,
+                x: (UIScreen.main.bounds.width - bannerWidth) / 2,
                 y: edgeInsets.top + finishYOffset,
                 width: startFrame.width,
                 height: startFrame.height

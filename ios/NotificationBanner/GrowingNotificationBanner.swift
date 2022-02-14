@@ -26,6 +26,37 @@ open class GrowingNotificationBanner: BaseNotificationBanner {
         case center
     }
     
+    override public var bannerWidth: CGFloat {
+        get {
+            var boundingWidth = UIScreen.main.bounds.width - currentAppearance.padding * 2
+            if #available(iOS 11.0, *), let keyWindow = UIApplication.shared.keyWindow {
+                let safeAreaOffset = keyWindow.safeAreaInsets.left + keyWindow.safeAreaInsets.right
+                boundingWidth -= safeAreaOffset
+            }
+            
+            var totalWidth: CGFloat = 0
+            
+            if leftView != nil { totalWidth += sideViewSize }
+            if rightView != nil { totalWidth += sideViewSize }
+            
+            
+            var titleWidth: CGFloat = 0
+            if let text = titleLabel?.text as? NSString, let font = titleLabel?.font {
+                titleWidth = text.size(withAttributes: [NSAttributedString.Key.font: font]).width
+            }
+            
+            var subtitleWidth: CGFloat = 0
+            if let text = subtitleLabel?.text as? NSString, let font = subtitleLabel?.font {
+                subtitleWidth = text.size(withAttributes: [NSAttributedString.Key.font: font]).width
+            }
+            
+            
+            totalWidth += max(titleWidth, subtitleWidth)
+            totalWidth += currentAppearance.padding * 2
+            return min(boundingWidth, max(150, totalWidth))
+        }
+    }
+    
     /// The height of the banner when it is presented
     override public var bannerHeight: CGFloat {
         get {
@@ -41,7 +72,6 @@ open class GrowingNotificationBanner: BaseNotificationBanner {
                 // We have to use keyWindow to ask for safeAreaInsets as `self` only knows its' safeAreaInsets in layoutSubviews
                 if #available(iOS 11.0, *), let keyWindow = UIApplication.shared.keyWindow {
                     let safeAreaOffset = keyWindow.safeAreaInsets.left + keyWindow.safeAreaInsets.right
-                    
                     boundingWidth -= safeAreaOffset
                 }
                 
@@ -120,7 +150,7 @@ open class GrowingNotificationBanner: BaseNotificationBanner {
         
         let labelsView = UIStackView()
         labelsView.axis = .vertical
-        labelsView.spacing = innerSpacing
+        //labelsView.spacing = innerSpacing
         
         let outerStackView = UIStackView()
         outerStackView.spacing = (currentAppearance.padding)
@@ -145,7 +175,8 @@ open class GrowingNotificationBanner: BaseNotificationBanner {
             titleLabel!.numberOfLines = 0
             titleLabel!.textColor = .white
             titleLabel!.text = title
-            titleLabel!.setContentHuggingPriority(.required, for: .vertical)
+            titleLabel!.textAlignment = .center
+            //titleLabel!.setContentHuggingPriority(.required, for: .vertical)
             labelsView.addArrangedSubview(titleLabel!)
         }
         
