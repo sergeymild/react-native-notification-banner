@@ -147,8 +147,6 @@ class NotificationBanner: NSObject {
             let banner = FloatingNotificationBanner(
                 title: params["title"] as? String,
                 subtitle: params["message"] as? String,
-                titleColor: appearance.titleColor,
-                subtitleColor: appearance.messageColor,
                 leftView: iconView,
                 style: style,
                 backgroundColor: appearance.backgroundColor
