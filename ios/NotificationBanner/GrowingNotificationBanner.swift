@@ -169,9 +169,15 @@ open class GrowingNotificationBanner: BaseNotificationBanner {
         
         outerStackView.addArrangedSubview(labelsView)
         
+        let appearance = bannerAppearance(type: style)
+        
         if let title = title {
+            let font = appearance.titleFont.family != nil
+            ? UIFont(name: appearance.titleFont.family!, size: appearance.titleFont.size)
+            : titleFont
+            
             titleLabel = UILabel()
-            titleLabel!.font = titleFont
+            titleLabel!.font = font
             titleLabel!.numberOfLines = 0
             titleLabel!.textColor = .white
             titleLabel!.text = title
@@ -181,8 +187,12 @@ open class GrowingNotificationBanner: BaseNotificationBanner {
         }
         
         if let subtitle = subtitle {
+            let font = appearance.titleFont.family != nil
+            ? UIFont(name: appearance.titleFont.family!, size: appearance.titleFont.size)
+            : subtitleFont
+            
             subtitleLabel = UILabel()
-            subtitleLabel!.font = subtitleFont
+            subtitleLabel!.font = font
             subtitleLabel!.numberOfLines = 0
             subtitleLabel!.textColor = .white
             subtitleLabel!.text = subtitle
