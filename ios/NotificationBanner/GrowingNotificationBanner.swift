@@ -179,7 +179,7 @@ open class GrowingNotificationBanner: BaseNotificationBanner {
             titleLabel = UILabel()
             titleLabel!.font = font
             titleLabel!.numberOfLines = 0
-            titleLabel!.textColor = .white
+            titleLabel!.textColor = appearance.titleColor
             titleLabel!.text = title
             titleLabel!.textAlignment = .center
             //titleLabel!.setContentHuggingPriority(.required, for: .vertical)
@@ -194,7 +194,7 @@ open class GrowingNotificationBanner: BaseNotificationBanner {
             subtitleLabel = UILabel()
             subtitleLabel!.font = font
             subtitleLabel!.numberOfLines = 0
-            subtitleLabel!.textColor = .white
+            subtitleLabel!.textColor = appearance.messageColor
             subtitleLabel!.text = subtitle
             if title == nil {
                 subtitleLabel!.setContentHuggingPriority(.required, for: .vertical)
