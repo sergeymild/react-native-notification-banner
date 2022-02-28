@@ -148,12 +148,12 @@ open class BaseNotificationBanner: UIView {
 
     /// The main window of the application which banner views are placed on
     private let appWindow: UIWindow? = {
-        if #available(iOS 13.0, *) {
-            return UIApplication.shared.connectedScenes
-                .first { $0.activationState == .foregroundActive || $0.activationState == .foregroundInactive }
-                .map { $0 as? UIWindowScene }
-                .map { $0?.windows.first } ?? UIApplication.shared.delegate?.window ?? UIApplication.shared.keyWindow
-        }
+//         if #available(iOS 13.0, *) {
+//             return UIApplication.shared.connectedScenes
+//                 .first { $0.activationState == .foregroundActive || $0.activationState == .foregroundInactive }
+//                 .map { $0 as? UIWindowScene }
+//                 .map { $0?.windows.first } ?? UIApplication.shared.delegate?.window ?? UIApplication.shared.keyWindow
+//         }
 
         return UIApplication.shared.delegate?.window ?? nil
     }()
