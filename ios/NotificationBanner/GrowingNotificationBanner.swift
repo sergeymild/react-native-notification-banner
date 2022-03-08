@@ -181,7 +181,6 @@ open class GrowingNotificationBanner: BaseNotificationBanner {
             titleLabel!.numberOfLines = 0
             titleLabel!.textColor = appearance.titleColor
             titleLabel!.text = title
-            titleLabel!.textAlignment = .center
             //titleLabel!.setContentHuggingPriority(.required, for: .vertical)
             labelsView.addArrangedSubview(titleLabel!)
         }
