@@ -5,7 +5,7 @@ No
 ## Installation
 
 ```sh
-"react-native-notification-banner": "sergeymild/react-native-notification-banner"
+"react-native-notification-banner": "sergeymild/react-native-notification-banner#0.8.6"
 ```
 
 ## Usage
