@@ -1,6 +1,6 @@
-# react-native-notification-banner
+# React Native Notification Banner
 
-No
+![React Native Bottom Sheet](./preview.gif)
 
 ## Installation
 
