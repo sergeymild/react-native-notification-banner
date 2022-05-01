@@ -2,6 +2,8 @@
 
 ![React Native Bottom Sheet](./preview.gif)
 
+Native implementation of notification banners
+
 ## Installation
 
 ```sh
