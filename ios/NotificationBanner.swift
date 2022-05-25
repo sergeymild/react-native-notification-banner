@@ -34,9 +34,12 @@ func hexStringToUIColor (hex: String?) -> UIColor? {
 
 
 @objc(NotificationBanner)
-class NotificationBanner: NSObject {
+class NotificationBanner: RCTViewManager {
     var presentedBanner: BaseNotificationBanner?
     
+    override static func requiresMainQueueSetup() -> Bool {
+      return true
+    }
     
     @objc
     func configure(_ params: [String: Any]) {
