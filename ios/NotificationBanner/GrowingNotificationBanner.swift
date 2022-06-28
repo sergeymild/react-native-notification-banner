@@ -38,22 +38,28 @@ open class GrowingNotificationBanner: BaseNotificationBanner {
             
             if leftView != nil { totalWidth += sideViewSize }
             if rightView != nil { totalWidth += sideViewSize }
+            debugPrint("--", sideViewSize)
             
             
             var titleWidth: CGFloat = 0
-            if let text = titleLabel?.text as? NSString, let font = titleLabel?.font {
-                titleWidth = text.size(withAttributes: [NSAttributedString.Key.font: font]).width
+            if let w = titleLabel?.intrinsicContentSize.width {
+                titleWidth = w
             }
             
             var subtitleWidth: CGFloat = 0
-            if let text = subtitleLabel?.text as? NSString, let font = subtitleLabel?.font {
-                subtitleWidth = text.size(withAttributes: [NSAttributedString.Key.font: font]).width
+            if let w = subtitleLabel?.intrinsicContentSize.width {
+                subtitleWidth = w
             }
-            
-            
+
             totalWidth += max(titleWidth, subtitleWidth)
             totalWidth += currentAppearance.padding * 2
-            return min(boundingWidth, max(150, totalWidth))
+            debugPrint(totalWidth)
+            totalWidth = max(currentAppearance.minWidth, totalWidth)
+            debugPrint(totalWidth)
+            totalWidth = min(currentAppearance.maxWidth, totalWidth)
+            debugPrint(totalWidth)
+            debugPrint("--------------")
+            return min(boundingWidth, totalWidth)
         }
     }
     
@@ -178,9 +184,10 @@ open class GrowingNotificationBanner: BaseNotificationBanner {
             
             titleLabel = UILabel()
             titleLabel!.font = font
-            titleLabel!.numberOfLines = 0
+            titleLabel!.numberOfLines = 1
             titleLabel!.textColor = appearance.titleColor
             titleLabel!.text = title
+            titleLabel!.textAlignment = appearance.titleFont.textAlign == "center" ? .center : .left
             //titleLabel!.setContentHuggingPriority(.required, for: .vertical)
             labelsView.addArrangedSubview(titleLabel!)
         }
@@ -195,6 +202,7 @@ open class GrowingNotificationBanner: BaseNotificationBanner {
             subtitleLabel!.numberOfLines = 0
             subtitleLabel!.textColor = appearance.messageColor
             subtitleLabel!.text = subtitle
+            subtitleLabel!.textAlignment = appearance.titleFont.textAlign == "center" ? .center : .left
             if title == nil {
                 subtitleLabel!.setContentHuggingPriority(.required, for: .vertical)
             }

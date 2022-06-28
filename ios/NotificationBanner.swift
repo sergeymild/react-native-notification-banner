@@ -45,9 +45,13 @@ class NotificationBanner: RCTViewManager {
     func configure(_ params: [String: Any]) {
         var errorStyle: ErrorStyle?
         if let error = params["error"] as? [String: Any] {
-            var font: Font = .init(size: 16, family: nil)
+            var font: Font = .init(size: 16, family: nil, textAlign: "center")
             if let f = error["titleFont"] as? [String: Any] {
-                font = Font(size: f["size"] as? Double ?? 17, family: f["family"] as? String)
+                font = Font(
+                    size: f["size"] as? Double ?? 17,
+                    family: f["family"] as? String,
+                    textAlign: f["textAlign"] as? String ?? "center"
+                )
             }
             
             let current = bannerAppearance(type: .danger)
@@ -63,9 +67,13 @@ class NotificationBanner: RCTViewManager {
         
         var successStyle: SuccessStyle?
         if let success = params["success"] as? [String: Any] {
-            var font: Font = .init(size: 16, family: nil)
+            var font: Font = .init(size: 16, family: nil, textAlign: "center")
             if let f = success["titleFont"] as? [String: Any] {
-                font = Font(size: f["size"] as? Double ?? 17, family: f["family"] as? String)
+                font = Font(
+                    size: f["size"] as? Double ?? 17,
+                    family: f["family"] as? String,
+                    textAlign: f["textAlign"] as? String ?? "center"
+                )
             }
             
             let current = bannerAppearance(type: .success)
@@ -107,6 +115,18 @@ class NotificationBanner: RCTViewManager {
             oldAppearance.padding = value
         } else {
             oldAppearance.padding = 16
+        }
+        
+        if let value = params["maxWidth"] as? Double {
+            oldAppearance.maxWidth = value
+        } else {
+            oldAppearance.maxWidth = UIScreen.main.bounds.width - 32
+        }
+        
+        if let value = params["minWidth"] as? Double {
+            oldAppearance.minWidth = value
+        } else {
+            oldAppearance.minWidth = 150
         }
         
         if let shadow = shadow {

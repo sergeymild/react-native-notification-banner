@@ -10,7 +10,7 @@ interface Params {
   message?: string;
   style?: 'success' | 'error' | 'info';
   duration?: number;
-  icon?: number;
+  // icon?: number;
   onPress?: () => void;
 }
 
@@ -18,10 +18,11 @@ interface Style {
   backgroundColor?: string;
   titleColor?: string;
   messageColor?: string;
-  icon?: ImageSourcePropType;
+  //icon?: ImageSourcePropType;
   titleFont?: {
     size?: number;
     family?: string;
+    textAlign?: 'center' | 'left'
   };
 }
 
@@ -30,6 +31,8 @@ interface ConfigurationParams {
   elevation?: number;
   margin?: number;
   padding?: number;
+  maxWidth?: number
+  minWidth?: number
 
   readonly shadow?: {
     offset: { width: number; height: number };
@@ -68,9 +71,9 @@ export class NotificationBanner {
             messageColor: !params.error.messageColor
               ? undefined
               : processColor(params.error.messageColor),
-            icon: !params.error.icon
-              ? undefined
-              : Image.resolveAssetSource(params.error.icon).uri,
+            // icon: !params.error.icon
+            //   ? undefined
+            //   : Image.resolveAssetSource(params.error.icon).uri,
           },
 
       success: !params.success
@@ -86,9 +89,9 @@ export class NotificationBanner {
             messageColor: !params.success.messageColor
               ? undefined
               : processColor(params.success.messageColor),
-            icon: !params.success.icon
-              ? undefined
-              : Image.resolveAssetSource(params.success.icon).uri,
+            // icon: !params.success.icon
+            //   ? undefined
+            //   : Image.resolveAssetSource(params.success.icon).uri,
           },
     });
   }
@@ -96,9 +99,9 @@ export class NotificationBanner {
   static show(params: Params) {
     const onPress = params.onPress ? params.onPress : noop;
     //@ts-ignore
-    params.icon = params.icon
-      ? Image.resolveAssetSource(params.icon).uri
-      : undefined;
+    // params.icon = params.icon
+    //   ? Image.resolveAssetSource(params.icon).uri
+    //   : undefined;
     NativeModules.NotificationBanner.show(params, onPress);
   }
 }

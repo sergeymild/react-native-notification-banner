@@ -78,7 +78,7 @@ class NotificationBannerModule(reactContext: ReactApplicationContext) :
       var font = currentError.titleFont
       if (error.hasKey("titleFont")) {
         val f = error.getMap("titleFont")!!
-        font = Font(size = f.getDouble("size"), family = null)
+        font = Font(size = f.getDouble("size"), family = null, textAlign = f.getString("textAlign") ?: "center")
       }
 
       errorStyle = ErrorStyle(
@@ -97,7 +97,7 @@ class NotificationBannerModule(reactContext: ReactApplicationContext) :
       var font = currentSuccess.titleFont
       if (error.hasKey("titleFont")) {
         val f = error.getMap("titleFont")!!
-        font = Font(size = f.getDouble("size"), family = null)
+        font = Font(size = f.getDouble("size"), family = null, textAlign = f.getString("textAlign") ?: "center")
       }
 
       successStyle = SuccessStyle(
@@ -110,14 +110,19 @@ class NotificationBannerModule(reactContext: ReactApplicationContext) :
     }
 
 
+    val elevation = if (params.hasKey("elevation")) params.getDouble("elevation").toFloat() else currentAppearance.elevation
+    val minWidth = if (params.hasKey("minWidth")) params.getDouble("minWidth").toInt() else currentAppearance.minWidth
+    val maxWidth = if (params.hasKey("maxWidth")) params.getDouble("maxWidth").toInt() else currentAppearance.maxWidth
     val defaultStyle = DefaultStyle(
-      elevation = if (params.hasKey("elevation")) params.getDouble("elevation").toFloat() else currentAppearance.elevation,
+      elevation = elevation,
       cornerRadius = pxFor(params, "cornerRadius", px(1000f)),
       error = errorStyle,
       success = successStyle,
       info = currentAppearance.info,
       padding = currentAppearance.padding,
-      margin = currentAppearance.margin
+      margin = currentAppearance.margin,
+      minWidth = minWidth,
+      maxWidth = maxWidth
     )
     setNewAppearance(defaultStyle)
   }
@@ -131,7 +136,9 @@ class NotificationBannerModule(reactContext: ReactApplicationContext) :
         val builder =
           Alerter.create(activity, layoutId = R.layout.alert_default_layout).hideIcon()
 
-        params.getString("title")?.let { builder.setTitle(it) }
+        params.getString("title")?.let {
+          builder.setTitle(it)
+        }
         params.getString("message")?.let { builder.setText(it) }
 
 
@@ -158,9 +165,12 @@ class NotificationBannerModule(reactContext: ReactApplicationContext) :
           val textContainer = it.findViewById<View>(R.id.text_container)
           val title = it.findViewById<TextView>(R.id.tvTitle)
           (title?.layoutParams as? LinearLayout.LayoutParams)?.apply {
-            gravity = Gravity.CENTER_HORIZONTAL
+            gravity = if (bannerStyle.titleFont.textAlign === "center") Gravity.CENTER_HORIZONTAL else Gravity.LEFT
           }
           val subtitle = it.findViewById<TextView>(R.id.tvText)
+          (subtitle?.layoutParams as? LinearLayout.LayoutParams)?.apply {
+            gravity = if (bannerStyle.titleFont.textAlign === "center") Gravity.CENTER_HORIZONTAL else Gravity.LEFT
+          }
           if (showIcon) {
             (textContainer.layoutParams as ViewGroup.MarginLayoutParams).marginStart = 0
           }
@@ -174,7 +184,6 @@ class NotificationBannerModule(reactContext: ReactApplicationContext) :
           title.setTextSize(TypedValue.COMPLEX_UNIT_SP, bannerStyle.titleFont.size.toFloat())
           subtitle.setTextColor(bannerStyle.messageColor)
           container.setBackgroundColor(bannerStyle.backgroundColor)
-
 
           (container.parent as ViewGroup).apply {
             this.setPadding(0, 0, 0, 0)

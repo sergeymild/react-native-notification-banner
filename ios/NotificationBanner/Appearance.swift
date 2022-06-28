@@ -27,6 +27,7 @@ struct Shadow {
 struct Font: Codable {
     var size: Double
     var family: String?
+    var textAlign: String
 }
 
 struct ErrorStyle: Style {
@@ -57,6 +58,8 @@ struct DefaultStyle {
     var cornerRadius: CGFloat = 0
     var margin: CGFloat = 32
     var padding: CGFloat = 16
+    var maxWidth: CGFloat = UIScreen.main.bounds.width - 32
+    var minWidth: CGFloat = 150
     
     var shadow: Shadow
     
@@ -75,21 +78,21 @@ var currentAppearance = DefaultStyle(
         backgroundColor: UIColor(red: 0.22, green: 0.80, blue: 0.46, alpha: 1.00),
         titleColor: .white,
         messageColor: .white,
-        titleFont: Font(size: 17, family: nil)
+        titleFont: Font(size: 17, family: nil, textAlign: "center")
     ),
     error: ErrorStyle(
         icon: nil,
         backgroundColor: UIColor(red: 0.90, green: 0.31, blue: 0.26, alpha: 1.00),
         titleColor: .white,
         messageColor: .white,
-        titleFont: Font(size: 17, family: nil)
+        titleFont: Font(size: 17, family: nil, textAlign: "center")
     ),
     info: InfoStyle(
         icon: nil,
         backgroundColor: UIColor(red: 0.23, green: 0.60, blue: 0.85, alpha: 1.00),
         titleColor: .white,
         messageColor: .white,
-        titleFont: Font(size: 17, family: nil)
+        titleFont: Font(size: 17, family: nil, textAlign: "center")
     )
 )
 

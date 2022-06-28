@@ -25,15 +25,16 @@ export default function App() {
         messageColor: '#775656',
         titleFont: {
           size: 15,
+          textAlign: 'center'
         },
       },
 
       error: {
         backgroundColor: 'orange',
         titleColor: 'yellow',
-        icon: require('./assets/icError.png'),
         titleFont: {
           size: 12,
+          textAlign: 'left'
         },
       },
     });
@@ -62,7 +63,7 @@ export default function App() {
         style={{ marginTop: 100 }}
         onPress={() => {
           NotificationBanner.show({
-            title: 'Success title',
+            title: 'Complain success Complain success',
             style: 'success',
             duration: 6000,
             onPress: () => {

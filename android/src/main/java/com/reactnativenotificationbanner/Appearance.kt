@@ -26,7 +26,8 @@ interface Style {
 
 class Font(
   val size: Double,
-  val family: String?
+  val family: String?,
+  var textAlign: String
 )
 
 class ErrorStyle(
@@ -58,6 +59,8 @@ class DefaultStyle(
   var cornerRadius: Float,
   var margin: Int,
   var padding: Float,
+  var minWidth: Int,
+  var maxWidth: Int,
 
 
   var success: SuccessStyle,
@@ -70,11 +73,13 @@ var currentAppearance = DefaultStyle(
   cornerRadius = 1000f,
   margin = 32,
   padding = 16f,
+  minWidth = 150,
+  maxWidth = 300,
   success = SuccessStyle(
     backgroundColor = argb(1f, 0.22f, 0.8f, 0.46f),
     titleColor = Color.WHITE,
     messageColor = Color.WHITE,
-    titleFont = Font(size = 17.0, family = null),
+    titleFont = Font(size = 17.0, family = null, textAlign = "center"),
     icon = null
   ),
 
@@ -82,7 +87,7 @@ var currentAppearance = DefaultStyle(
     backgroundColor = argb(1f, 0.9f, 0.31f, 0.26f),
     titleColor = Color.WHITE,
     messageColor = Color.WHITE,
-    titleFont = Font(size = 17.0, family = null),
+    titleFont = Font(size = 17.0, family = null, textAlign = "center"),
     icon = null
   ),
 
@@ -90,7 +95,7 @@ var currentAppearance = DefaultStyle(
     backgroundColor = argb(1f, 0.23f, 0.6f, 0.85f),
     titleColor = Color.WHITE,
     messageColor = Color.WHITE,
-    titleFont = Font(size = 17.0, family = null),
+    titleFont = Font(size = 17.0, family = null, textAlign = "center"),
     icon = null
   )
 )
