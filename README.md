@@ -7,7 +7,7 @@ Native implementation of notification banners
 ## Installation
 
 ```sh
-"react-native-notification-banner": "sergeymild/react-native-notification-banner#0.8.6"
+"react-native-notification-banner": "sergeymild/react-native-notification-banner#0.8.7"
 ```
 
 ## Usage
